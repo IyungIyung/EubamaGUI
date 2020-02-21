@@ -62,7 +62,7 @@
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Location = new System.Drawing.Point(37, 276);
 			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(646, 150);
+			this.dataGridView1.Size = new System.Drawing.Size(875, 150);
 			this.dataGridView1.TabIndex = 2;
 			this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
 			this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
@@ -79,7 +79,7 @@
 			// 
 			// topButton
 			// 
-			this.topButton.Location = new System.Drawing.Point(704, 276);
+			this.topButton.Location = new System.Drawing.Point(918, 277);
 			this.topButton.Name = "topButton";
 			this.topButton.Size = new System.Drawing.Size(75, 23);
 			this.topButton.TabIndex = 4;
@@ -89,7 +89,7 @@
 			// 
 			// upButton
 			// 
-			this.upButton.Location = new System.Drawing.Point(704, 305);
+			this.upButton.Location = new System.Drawing.Point(918, 306);
 			this.upButton.Name = "upButton";
 			this.upButton.Size = new System.Drawing.Size(75, 23);
 			this.upButton.TabIndex = 5;
@@ -99,7 +99,7 @@
 			// 
 			// downButton
 			// 
-			this.downButton.Location = new System.Drawing.Point(704, 334);
+			this.downButton.Location = new System.Drawing.Point(918, 335);
 			this.downButton.Name = "downButton";
 			this.downButton.Size = new System.Drawing.Size(75, 23);
 			this.downButton.TabIndex = 6;
@@ -109,7 +109,7 @@
 			// 
 			// bottomButton
 			// 
-			this.bottomButton.Location = new System.Drawing.Point(704, 363);
+			this.bottomButton.Location = new System.Drawing.Point(918, 364);
 			this.bottomButton.Name = "bottomButton";
 			this.bottomButton.Size = new System.Drawing.Size(75, 23);
 			this.bottomButton.TabIndex = 7;
@@ -121,7 +121,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.ClientSize = new System.Drawing.Size(1017, 434);
 			this.Controls.Add(this.bottomButton);
 			this.Controls.Add(this.downButton);
 			this.Controls.Add(this.upButton);

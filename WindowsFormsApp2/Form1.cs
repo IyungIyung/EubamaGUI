@@ -14,7 +14,7 @@ namespace EubamaGui
 {
 	public partial class Form1 : Form
 	{
-		private int activeRow,maxRow;
+		private int activeRow = 0, maxRow;
 
 		public Form1()
 		{
@@ -56,6 +56,38 @@ namespace EubamaGui
 			}
 
 			dataGridView1.DataSource = table;
+			maxRow = Helper.productionOrderList.Count;
+			dataGridView1.CurrentCell = dataGridView1.Rows[activeRow].Cells[0];
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			SqlConnection connection;
+			string server = "192.168.3.49";
+			string database = "TestDB";
+			string uid = "SA";
+			string password = "Imech1234!";
+			string connectionString;
+			connectionString = "SERVER=" + server + ";" + "DATABASE=" + database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+
+			try
+			{
+				connection = new SqlConnection(connectionString);
+
+				connection.Open();
+
+				SqlDataAdapter SqlDataAdapter1 = new SqlDataAdapter("select * from productionOrders", connection);
+				DataSet DS = new DataSet();
+				SqlDataAdapter1.Fill(DS);
+				dataGridView1.DataSource = DS.Tables[0];
+
+				//close connection
+				connection.Close();
+			}
+			catch (Exception ecc)
+			{
+				MessageBox.Show(ecc.ToString());
+			}
 		}
 
 		private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -145,24 +177,62 @@ namespace EubamaGui
 
 		private void downButton_Click(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				if (activeRow != maxRow-1)
+				{
+					exchangeRow(activeRow, activeRow + 1);
+					Form1_Load();
+				}
+				else
+				{
+					MessageBox.Show("Please choose another row");
+				}
+			}
+			catch (Exception ecc)
+			{
+				MessageBox.Show(ecc.ToString());
+			}
 		}
 
 		private void bottomButton_Click(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				if (activeRow != maxRow - 1)
+				{
+					exchangeRow(activeRow, maxRow-1);
+					Form1_Load();
+				}
+				else
+				{
+					MessageBox.Show("Please choose another row");
+				}
+			}
+			catch (Exception ecc)
+			{
+				MessageBox.Show(ecc.ToString());
+			}
 		}
 
 		private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
 			activeRow = e.RowIndex;
+			maxRow = Helper.productionOrderList.Count;
 		}
 
 		private void exchangeRow(int rowInit, int rowDest)
 		{
 			OrderDataModel temp = Helper.productionOrderList[rowDest];
+			int tempOrder = temp.Order;
+			Helper.productionOrderList[rowDest].Order = Helper.productionOrderList[rowInit].Order;
+			Helper.productionOrderList[rowInit].Order = tempOrder;
 			Helper.productionOrderList[rowDest] = Helper.productionOrderList[rowInit];
 			Helper.productionOrderList[rowInit] = temp;
+			Helper.productionOrderList[rowInit].OrderModified = true;
+			Helper.productionOrderList[rowDest].OrderModified = true;
+
+			activeRow = rowDest;
 
 			//return false;
 		}
