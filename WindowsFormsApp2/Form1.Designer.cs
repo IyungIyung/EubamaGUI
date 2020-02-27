@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.ScheduledOrder = new System.Windows.Forms.ListBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.button2 = new System.Windows.Forms.Button();
@@ -36,20 +35,15 @@
 			this.upButton = new System.Windows.Forms.Button();
 			this.downButton = new System.Windows.Forms.Button();
 			this.bottomButton = new System.Windows.Forms.Button();
+			this.dataGridView2 = new System.Windows.Forms.DataGridView();
+			this.push = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// ScheduledOrder
-			// 
-			this.ScheduledOrder.FormattingEnabled = true;
-			this.ScheduledOrder.Location = new System.Drawing.Point(37, 40);
-			this.ScheduledOrder.Name = "ScheduledOrder";
-			this.ScheduledOrder.Size = new System.Drawing.Size(213, 147);
-			this.ScheduledOrder.TabIndex = 0;
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(37, 222);
+			this.button1.Location = new System.Drawing.Point(918, 403);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 1;
@@ -62,6 +56,7 @@
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Location = new System.Drawing.Point(37, 276);
 			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.ReadOnly = true;
 			this.dataGridView1.Size = new System.Drawing.Size(875, 150);
 			this.dataGridView1.TabIndex = 2;
 			this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -69,7 +64,7 @@
 			// 
 			// button2
 			// 
-			this.button2.Location = new System.Drawing.Point(168, 221);
+			this.button2.Location = new System.Drawing.Point(999, 403);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(75, 23);
 			this.button2.TabIndex = 3;
@@ -117,11 +112,34 @@
 			this.bottomButton.UseVisualStyleBackColor = true;
 			this.bottomButton.Click += new System.EventHandler(this.bottomButton_Click);
 			// 
+			// dataGridView2
+			// 
+			this.dataGridView2.AllowUserToAddRows = false;
+			this.dataGridView2.AllowUserToDeleteRows = false;
+			this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView2.Location = new System.Drawing.Point(37, 91);
+			this.dataGridView2.Name = "dataGridView2";
+			this.dataGridView2.ReadOnly = true;
+			this.dataGridView2.Size = new System.Drawing.Size(875, 150);
+			this.dataGridView2.TabIndex = 8;
+			// 
+			// push
+			// 
+			this.push.Location = new System.Drawing.Point(435, 247);
+			this.push.Name = "push";
+			this.push.Size = new System.Drawing.Size(94, 23);
+			this.push.TabIndex = 9;
+			this.push.Text = "push to queue";
+			this.push.UseVisualStyleBackColor = true;
+			this.push.Click += new System.EventHandler(this.push_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1017, 434);
+			this.ClientSize = new System.Drawing.Size(1107, 434);
+			this.Controls.Add(this.push);
+			this.Controls.Add(this.dataGridView2);
 			this.Controls.Add(this.bottomButton);
 			this.Controls.Add(this.downButton);
 			this.Controls.Add(this.upButton);
@@ -129,17 +147,15 @@
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.button1);
-			this.Controls.Add(this.ScheduledOrder);
 			this.Name = "Form1";
 			this.Text = "Form1";
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
-
-		private System.Windows.Forms.ListBox ScheduledOrder;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.DataGridView dataGridView1;
 		private System.Windows.Forms.Button button2;
@@ -147,6 +163,8 @@
 		private System.Windows.Forms.Button upButton;
 		private System.Windows.Forms.Button downButton;
 		private System.Windows.Forms.Button bottomButton;
+		private System.Windows.Forms.DataGridView dataGridView2;
+		private System.Windows.Forms.Button push;
 	}
 }
 

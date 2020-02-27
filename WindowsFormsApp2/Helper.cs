@@ -10,7 +10,7 @@ namespace EubamaGui
 	{
 		public static OrderDataModel productionOrder;
 		public static List<OrderDataModel> productionOrderList = new List<OrderDataModel>();
-		
+		public static List<OrderDataModel> queueOrderList = new List<OrderDataModel>();
 	}
 
 }

@@ -60,38 +60,72 @@ namespace EubamaGui
 			return true;
 		}
 
-		public static bool readOrderData()
+		//only for the status
+		public static bool updateOrderDB(OrderDataModel orderToBeUpdated, int newStatus)
 		{
 			try
 			{
 				if (Connect())
 				{
-					List<long> tmpList = new List<long>();
-					string sql = "select * from productionOrders where status=0;";
-					using (SqlCommand cmd = new SqlCommand(sql, m_dbConnection))
+					string query = "update productionOrders set status=@Status where idProductionOrder like @IdProductionOrder and machineRecipe like @MachineRecipe and targetPieces like @TargetPieces and priority like @Priority";
+					using (SqlCommand cmd = new SqlCommand(query, m_dbConnection))
 					{
-						using (SqlDataReader reader = cmd.ExecuteReader())
-						{
-							
-							while (reader.Read())
-							{
-								OrderDataModel item = new OrderDataModel((string)reader["idProductionOrder"], (string)reader["machineRecipe"], (int)reader["targetPieces"], (int)reader["priority"], (int)reader["status"], (System.DateTime)reader["timestampInsert"], (int)reader["orderNum"], (bool)reader["orderModified"]);
-								Helper.productionOrderList.Add(item);
-							}
-						}
+						cmd.Parameters.AddWithValue("@Status", newStatus);
+						cmd.Parameters.AddWithValue("@IdProductionOrder",orderToBeUpdated.IdProductionOrder);
+						cmd.Parameters.AddWithValue("@MachineRecipe", orderToBeUpdated.MachineRecipe);
+						cmd.Parameters.AddWithValue("@TargetPieces", orderToBeUpdated.TargetPieces);
+						cmd.Parameters.AddWithValue("@Priority", orderToBeUpdated.Priority);
+						cmd.ExecuteNonQuery();
 					}
 					return true;
 				}
 				else
 				{
-					MessageBox.Show("Unable to connect to DB");
+					MessageBox.Show("Unable to update DB");
 					return false;
 				}
 			}
 			catch (Exception ecc)
 			{
-				MessageBox.Show("Error during OrderGuiData: " + ecc.Message);
 				MessageBox.Show(ecc.ToString());
+				return false;
+			}
+		}
+
+		public static bool readOrderDB(int status, out List<OrderDataModel> tempOrderListout)
+		{
+			List<OrderDataModel> tempOrderList = new List<OrderDataModel>();
+			try
+			{
+				if (Connect())
+				{
+					string query = "select * from productionOrders where status=@Status;";
+					using (SqlCommand cmd = new SqlCommand(query, m_dbConnection))
+					{
+						cmd.Parameters.AddWithValue("@Status", status);
+						using (SqlDataReader reader = cmd.ExecuteReader())
+						{
+							while (reader.Read())
+							{
+								OrderDataModel item = new OrderDataModel((string)reader["idProductionOrder"], (string)reader["machineRecipe"], (int)reader["targetPieces"], (int)reader["priority"], (int)reader["status"], (System.DateTime)reader["timestampInsert"], (int)reader["orderNum"], (bool)reader["orderModified"]);
+								tempOrderList.Add(item);
+							}
+						}
+					}
+					tempOrderListout = tempOrderList;
+					return true;
+				}
+				else
+				{
+					MessageBox.Show("Unable to read DB");
+					tempOrderListout = tempOrderList;
+					return false;
+				}
+			}
+			catch (Exception ecc)
+			{
+				MessageBox.Show("Error during OrderGuiData: " + ecc.ToString());
+				tempOrderListout = tempOrderList;
 				return false;
 			}
 		}

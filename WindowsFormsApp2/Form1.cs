@@ -26,14 +26,15 @@ namespace EubamaGui
 			Helper.productionOrder = new OrderDataModel();
 			try
 			{
-				if(DBManager.readOrderData())
+				int status = 0;
+				if(DBManager.readOrderDB(status,out Helper.productionOrderList))
 				{
 					Form1_Load();
 				}
 			}
 			catch (Exception ecc)
 			{
-
+				MessageBox.Show(ecc.ToString());
 			}
 		}
 
@@ -60,10 +61,31 @@ namespace EubamaGui
 			dataGridView1.CurrentCell = dataGridView1.Rows[activeRow].Cells[0];
 		}
 
+		private void Form2_Load()
+		{
+			DataTable table = new DataTable();
+
+			table.Columns.Add("idProductionOrder", typeof(string));
+			table.Columns.Add("targetPieces", typeof(int));
+			table.Columns.Add("machineRecipe", typeof(string));
+			table.Columns.Add("priority", typeof(int));
+			table.Columns.Add("timeStampInsert", typeof(string));
+			table.Columns.Add("status", typeof(int));
+			table.Columns.Add("order", typeof(int));
+			table.Columns.Add("orderModified", typeof(int));
+
+			foreach (OrderDataModel order in Helper.queueOrderList)
+			{
+				table.Rows.Add(order.IdProductionOrder, order.TargetPieces, order.MachineRecipe, order.Priority, order.InsertingTime, order.Status, order.Order, order.OrderModified);
+			}
+
+			dataGridView2.DataSource = table;
+		}
+
 		private void button2_Click(object sender, EventArgs e)
 		{
 			SqlConnection connection;
-			string server = "192.168.3.49";
+			string server = "192.168.201.11";
 			string database = "TestDB";
 			string uid = "SA";
 			string password = "Imech1234!";
@@ -221,6 +243,30 @@ namespace EubamaGui
 			maxRow = Helper.productionOrderList.Count;
 		}
 
+		private void push_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				DBManager.updateOrderDB(Helper.productionOrderList[0], 1);
+				int status = 0;
+				if (DBManager.readOrderDB(status, out Helper.productionOrderList))
+				{
+					Form1_Load();
+				}
+				status = 1;
+				if (DBManager.readOrderDB(status, out Helper.queueOrderList))
+				{
+					Form2_Load();
+				}
+
+			}
+			catch (Exception ecc)
+			{
+				MessageBox.Show(ecc.ToString());
+			}
+
+		}
+
 		private void exchangeRow(int rowInit, int rowDest)
 		{
 			OrderDataModel temp = Helper.productionOrderList[rowDest];
@@ -228,8 +274,6 @@ namespace EubamaGui
 			Helper.productionOrderList[rowDest].Order = Helper.productionOrderList[rowInit].Order;
 			Helper.productionOrderList[rowInit].Order = tempOrder;
 			Helper.productionOrderList[rowDest] = Helper.productionOrderList[rowInit];
-			Helper.productionOrderList[rowInit] = temp;
-			Helper.productionOrderList[rowInit].OrderModified = true;
 			Helper.productionOrderList[rowDest].OrderModified = true;
 
 			activeRow = rowDest;
