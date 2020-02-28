@@ -258,7 +258,6 @@ namespace EubamaGui
 				{
 					Form2_Load();
 				}
-
 			}
 			catch (Exception ecc)
 			{
